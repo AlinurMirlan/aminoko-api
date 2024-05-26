@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Aminoko.Api/obj
+/Aminoko.Api/bin/Debug/net8.0
+/Aminoko.Template/obj
+/Aminoko.Template/bin/Debug/net8.0
+/Aminoko.Template/.antlr
+/Aminoko.Template.Tests/bin/Debug/net8.0
+/Aminoko.Template.Tests/obj
