@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aminoko.Api", "Aminoko.Api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aminoko.Template", "Aminoko.Template\Aminoko.Template.csproj", "{C47D607D-327E-4553-BD1C-34DB14574F05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aminoko.Template.Tests", "Aminoko.Template.Tests\Aminoko.Template.Tests.csproj", "{E9412977-C4A4-4E5E-A625-D840F29952F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aminoko.Template.Tests", "Aminoko.Template.Tests\Aminoko.Template.Tests.csproj", "{E9412977-C4A4-4E5E-A625-D840F29952F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

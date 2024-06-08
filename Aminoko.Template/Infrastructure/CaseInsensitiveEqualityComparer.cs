@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Aminoko.Template;
+namespace Aminoko.Template.Infrastructure;
 
 public class CaseInsensitiveEqualityComparer : IEqualityComparer<string>
 {

@@ -1,4 +1,6 @@
-﻿namespace Aminoko.Template;
+﻿using Aminoko.Template.Models;
+
+namespace Aminoko.Template;
 
 public class FlashcardBuilder : IFlashcardBuilder
 {
@@ -15,6 +17,11 @@ public class FlashcardBuilder : IFlashcardBuilder
 
     public void AddBlock(BlockType blockType, string inputString)
     {
+        if (string.IsNullOrEmpty(inputString))
+        {
+            return;
+        }
+
         blocks.Add(new Block(blockType, inputString));
     }
 

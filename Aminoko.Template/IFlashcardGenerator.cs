@@ -1,4 +1,6 @@
-﻿namespace Aminoko.Template;
+﻿using Aminoko.Template.Models;
+
+namespace Aminoko.Template;
 
 /// <summary>
 /// Template to flashcard generator.

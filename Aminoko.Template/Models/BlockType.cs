@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aminoko.Template;
+namespace Aminoko.Template.Models;
 
-public record Block(BlockType BlockType, string Value);
+public enum BlockType
+{
+    Text,
+    Image,
+    Audio,
+    Definition
+}

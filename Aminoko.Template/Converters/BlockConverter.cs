@@ -1,4 +1,4 @@
-﻿namespace Aminoko.Template;
+﻿namespace Aminoko.Template.Converters;
 
 public class BlockConverter : IBlockConverter
 {

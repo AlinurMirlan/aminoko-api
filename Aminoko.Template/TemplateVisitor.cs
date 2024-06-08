@@ -1,4 +1,7 @@
-﻿using Antlr4.Runtime.Misc;
+﻿using Aminoko.Template.Converters;
+using Aminoko.Template.Infrastructure;
+using Aminoko.Template.Models;
+using Antlr4.Runtime.Misc;
 using SharpCompress.Common;
 using System.Text;
 
@@ -36,7 +39,9 @@ public class TemplateVisitor(
     public override string VisitBody([NotNull] TemplateParser.BodyContext context)
     {
         foreach (var block in context.blockExpression())
+        {
             block.Accept(this);
+        }
 
         return string.Empty;
     }
@@ -69,7 +74,8 @@ public class TemplateVisitor(
 
     public override string VisitBlockText([NotNull] TemplateParser.BlockTextContext context)
     {
-        flashcardBuilder.AddBlock(BlockType.Text, context.inlineTextExpressions().Accept(this));
+        var inputString = context.inlineTextExpressions().Accept(this);
+        flashcardBuilder.AddBlock(BlockType.Text, blockConverter.BlockText(inputString));
         return string.Empty;
     }
 
@@ -77,7 +83,9 @@ public class TemplateVisitor(
     {
         var identifier = context.STATEMENT_METHOD_STATEMENT_DECLARATION().GetText()[..^1];
         if (statements.ContainsKey(identifier))
+        {
             throw new InvalidFormatException($"The statement '{identifier}' is already defined.");
+        }
 
         statements.Add(identifier, context.statementMethodParameters().Accept(this));
         return string.Empty;
@@ -114,7 +122,9 @@ public class TemplateVisitor(
     {
         var identifier = context.STATEMENT().GetText();
         if (!statements.TryGetValue(identifier, out string? statementValue))
+        {
             throw new InvalidFormatException($"The statement '{identifier}' is not defined.");
+        }
 
         return inlineConverter.InlineStatement(statementValue);
     }
@@ -123,7 +133,9 @@ public class TemplateVisitor(
     {
         var result = new StringBuilder();
         foreach (var expression in context.statementMethodParameter())
+        {
             result.Append(expression.Accept(this));
+        }
 
         return result.ToString();
     }
@@ -138,7 +150,9 @@ public class TemplateVisitor(
     {
         var result = new StringBuilder();
         foreach (var expression in context.inlineTextExpression())
+        {
             result.Append(expression.Accept(this));
+        }
 
         return result.ToString();
     }

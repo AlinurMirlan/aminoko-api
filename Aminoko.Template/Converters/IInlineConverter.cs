@@ -1,4 +1,4 @@
-﻿namespace Aminoko.Template;
+﻿namespace Aminoko.Template.Converters;
 
 public interface IInlineConverter
 {

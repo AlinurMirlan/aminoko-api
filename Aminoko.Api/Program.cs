@@ -1,34 +1,30 @@
-var builder = WebApplication.CreateBuilder(args);
+using Aminoko.Api.Persistence;
+using FastEndpoints;
+using FastEndpoints.Security;
+using FastEndpoints.Swagger;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder();
+
+var config = builder.Configuration;
+
+builder.Services
+    .AddFastEndpoints()
+    .SwaggerDocument()
+    .AddAuthenticationJwtBearer(options => 
+        options.SigningKey = config["Security:Tokens:Key"] 
+            ?? throw new InvalidOperationException("JWT security key is not set up."))
+    .AddAuthorization()
+    .AddDbContext<ApplicationContext>(options =>
+    {
+        options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+    });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseFastEndpoints()
+    .UseSwaggerGen()
+    .UseAuthentication()
+    .UseAuthorization();
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-});
-
-app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+await app.RunAsync();
