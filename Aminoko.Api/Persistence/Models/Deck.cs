@@ -7,7 +7,7 @@ namespace Aminoko.Api.Persistence.Models;
 [Table("Deck")]
 [Index("Name", Name = "IX_Deck_Name", IsUnique = false)]
 [Index("UserId", "Name", Name = "IX_Deck_UserId_Name", IsUnique = true)]
-public partial class Deck
+public class Deck
 {
     [Key]
     public int Id { get; set; }

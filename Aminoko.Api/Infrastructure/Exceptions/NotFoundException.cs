@@ -1,6 +1,6 @@
 ﻿namespace Aminoko.Api.Infrastructure.Exceptions;
 
-public class NotFoundException : Exception
+public class NotFoundException : BadRequestException
 {
     public NotFoundException()
     {

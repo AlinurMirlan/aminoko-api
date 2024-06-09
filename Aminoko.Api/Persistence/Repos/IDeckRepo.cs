@@ -15,5 +15,5 @@ public interface IDeckRepo
 
     public Task<Deck> AddAsync(Deck deck);
 
-    public Task UpdateDeckAsync(int deckId, Deck updatedDeck);
+    public Task UpdateAsync(int deckId, Deck updatedDeck);
 }

@@ -11,6 +11,8 @@ public class Template
 
     public required string UserId { get; set; }
 
+    public required string Name { get; set; }
+
     public required string Body { get; set; }
 
     [Column(TypeName = "date")]

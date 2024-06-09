@@ -10,3 +10,7 @@
 /Aminoko.Template/.antlr
 /Aminoko.Template.Tests/bin/Debug/net8.0
 /Aminoko.Template.Tests/obj
+/Aminoko.TemplateGen/obj
+/Aminoko.TemplateGen.Tests/bin/Debug/net8.0
+/Aminoko.TemplateGen.Tests/obj
+/Aminoko.TemplateGen/bin/Debug/net8.0

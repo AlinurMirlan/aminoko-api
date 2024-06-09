@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Aminoko.Api.Persistence.Models;
 
 [Table("Flashcard")]
-public partial class Flashcard
+public class Flashcard
 {
     [Key]
     public int Id { get; set; }

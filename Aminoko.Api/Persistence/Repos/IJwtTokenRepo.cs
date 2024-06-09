@@ -1,9 +1,9 @@
 ﻿using Aminoko.Api.Models;
-using Aminoko.Api.Persistence.Models;
+using System.Security.Claims;
 
 namespace Aminoko.Api.Persistence.Repos;
 
 public interface IJwtTokenRepo
 {
-    public Credentials CreateJwt(User user);
+    public JwtCredentials CreateJwt(params Claim[] claims);
 }

@@ -1,5 +1,6 @@
 ﻿using Aminoko.Api.Infrastructure.Exceptions;
 using Aminoko.Api.Persistence.Models;
+using Aminoko.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aminoko.Api.Persistence.Repos;
@@ -13,8 +14,13 @@ public class FlashcardRepo : IFlashcardRepo
         _context = context;
     }
 
-    public async Task<Flashcard> AddAsync(Flashcard flashcard)
+    public async Task<Flashcard> GenerateAsync(Flashcard flashcard)
     {
+        if (await _context.Decks.FindAsync(flashcard.DeckId) is null)
+        {
+            throw new NotFoundException(nameof(Deck));
+        }
+
         flashcard = (await _context.Flashcards.AddAsync(flashcard)).Entity;
         await _context.SaveChangesAsync();
         return flashcard;

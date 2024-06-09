@@ -36,8 +36,15 @@ public class DeckRepo : IDeckRepo
 
     public Task<Deck> AddAsync(Deck deck)
     {
+        if (_context.Users.Find(deck.UserId) is null)
+        {
+            throw new NotFoundException(nameof(User));
+        }
+
         if (_context.Decks.Any(d => d.Name == deck.Name && d.UserId == deck.UserId))
-            throw new InvalidOperationException("Deck with the same name already exists in the database.");
+        {
+            throw new ConflictException("Deck with the same name already exists.");
+        }
 
         return AddAsyncInternal(deck);
     }
@@ -86,7 +93,7 @@ public class DeckRepo : IDeckRepo
         };
     }
 
-    public async Task UpdateDeckAsync(int deckId, Deck updatedDeck)
+    public async Task UpdateAsync(int deckId, Deck updatedDeck)
     {
         var deck = await _context.Decks.FindAsync(deckId) ?? throw new NotFoundException(nameof(Deck));
 

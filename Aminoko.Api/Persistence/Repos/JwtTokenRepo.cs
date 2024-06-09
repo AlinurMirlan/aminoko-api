@@ -1,5 +1,4 @@
 ﻿using Aminoko.Api.Models;
-using Aminoko.Api.Persistence.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,14 +15,8 @@ public class JwtTokenRepo : IJwtTokenRepo
         _config = config;
     }
 
-    public Credentials CreateJwt(User user)
+    public JwtCredentials CreateJwt(params Claim[] claims)
     {
-        var claims = new Claim[]
-        {
-            new(JwtRegisteredClaimNames.Sub, user.Email ?? string.Empty),
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
-
         var key = _config["Security:Tokens:Key"] ?? throw new InvalidOperationException("JWT security key is not set.");
         var audience = _config["Security:Tokens:Audience"] ?? throw new InvalidOperationException("JWT audience is not set.");
         var issuer = _config["Security:Tokens:Issuer"] ?? throw new InvalidOperationException("JWT issuer is not set.");
@@ -41,12 +34,11 @@ public class JwtTokenRepo : IJwtTokenRepo
             signingCredentials: signingCredentials
         );
 
-        string jwt = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-        return new Credentials
+        var jwt = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+        return new JwtCredentials
         {
-            Jwt = jwt,
-            Expiration = expiration,
-            UserId = user.Id
+            Token = jwt,
+            Expiration = expiration
         };
     }
 }

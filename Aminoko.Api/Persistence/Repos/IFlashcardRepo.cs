@@ -4,7 +4,7 @@ namespace Aminoko.Api.Persistence.Repos;
 
 public interface IFlashcardRepo
 {
-    public Task<Flashcard> AddAsync(Flashcard flashcard);
+    public Task<Flashcard> GenerateAsync(Template template);
 
     public Task<Flashcard> GetAsync(int flashcardId);
 
