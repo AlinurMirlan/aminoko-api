@@ -1,12 +1,12 @@
 ﻿namespace Aminoko.Api.Models;
 
-public class TemplateDto
+public class FlashcardDto
 {
     public int Id { get; set; }
 
-    public required string Name { get; set; }
+    public required string Front { get; set; }
 
-    public required string Body { get; set; }
+    public required string Back { get; set; }
 
     public DateTime CreationDate { get; set; }
 }

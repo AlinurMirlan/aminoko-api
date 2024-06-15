@@ -1,7 +1,7 @@
 ﻿using Aminoko.Api.Services.ContentGeneration;
 using Aminoko.TemplateGen.Converters;
 
-namespace Aminoko.Api.Services.Generation;
+namespace Aminoko.Api.Services.ContentConversion;
 
 public class InlineConverter : InlineConverterBase
 {

@@ -6,7 +6,7 @@ namespace Aminoko.TemplateGen.Tests;
 
 public class FlashcardGeneratorTests
 {
-    private readonly FlashcardGenerator flashcardGenerator;
+    private readonly FlashcardGen flashcardGenerator;
     private static readonly string inlineStatementWord = "sample word";
     private static readonly string inlineStatementSentence = "sample sentence";
     private static readonly string blockImage = "https://image/sampleImage.png";
@@ -38,7 +38,7 @@ public class FlashcardGeneratorTests
         blockConverter.Setup(x => x.BlockText(It.IsAny<string>())).Returns<string>(x => x);
         blockConverter.Setup(x => x.BlockStatementMethodImage(It.IsAny<string>())).Returns<string>(ApiImageFunc);
 
-        flashcardGenerator = new FlashcardGenerator(inlineConverter.Object, blockConverter.Object, new FlashcardBuilder());
+        flashcardGenerator = new FlashcardGen(inlineConverter.Object, blockConverter.Object, new FlashcardBuilder());
     }
 
     [Fact]

@@ -11,17 +11,7 @@ public static class DeckMappingExtensions
         {
             Id = deck.Id,
             Name = deck.Name,
-            UserId = deck.UserId,
-        };
-    }
-
-    public static Deck ToDeck(this DeckDto deckDto)
-    {
-        return new Deck
-        {
-            Id = deckDto.Id,
-            Name = deckDto.Name,
-            UserId = deckDto.UserId,
+            CreationDate = deck.CreationDate
         };
     }
 }

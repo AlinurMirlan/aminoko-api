@@ -104,8 +104,20 @@ public class TemplateRepo : ITemplateRepo
     {
         var template = await _context.Templates.FindAsync(templateId) ?? throw new NotFoundException(nameof(Template));
 
-        template.Name = updatedTemplate.Name;
-        template.CreationDate = updatedTemplate.CreationDate;
+        if (!string.IsNullOrEmpty(updatedTemplate.Name))
+        {
+            template.Name = updatedTemplate.Name;
+        }
+
+        if (!string.IsNullOrEmpty(updatedTemplate.Body))
+        {
+            template.Body = updatedTemplate.Body;
+        }
+
+        if (updatedTemplate.CreationDate != default)
+        {
+            template.CreationDate = updatedTemplate.CreationDate;
+        }
 
         await _context.SaveChangesAsync();
     }

@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Templates.GetTemplate;
 
-[HttpGet("/template")]
+[HttpGet("/template/{TemplateId:int}")]
 public sealed class GetTemplateEndpoint : Endpoint<GetTemplateRequest, GetTemplateResponse>
 {
     private readonly ITemplateRepo _templateRepo;

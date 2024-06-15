@@ -12,7 +12,7 @@ public class Deck
     [Key]
     public int Id { get; set; }
 
-    public required string UserId { get; set; }
+    public string UserId { get; set; } = default!;
 
     public required string Name { get; set; }
 

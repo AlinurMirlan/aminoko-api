@@ -12,4 +12,14 @@ public static class CreateTemplateMapping
             Template = template.ToTemplateDto()
         };
     }
+
+    public static Template ToTemplate(this CreateTemplateRequest request)
+    {
+        return new Template
+        {
+            UserId = request.UserId,
+            Name = request.Name,
+            Body = request.Body
+        };
+    }
 }

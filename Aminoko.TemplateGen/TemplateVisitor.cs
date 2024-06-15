@@ -7,13 +7,22 @@ using System.Text;
 
 namespace Aminoko.TemplateGen;
 
-public class TemplateVisitor(
-    InlineConverterBase inlineConverter,
-    IBlockConverter blockConverter,
-    IFlashcardBuilder flashcardBuilder)
-    : TemplateParserBaseVisitor<string>
+public class TemplateVisitor : TemplateParserBaseVisitor<string>
 {
     private readonly Dictionary<string, string> statements = new(new CaseInsensitiveEqualityComparer());
+    private readonly IInlineConverter inlineConverter;
+    private readonly IBlockConverter blockConverter;
+    private readonly IFlashcardBuilder flashcardBuilder;
+
+    public TemplateVisitor(
+        IInlineConverter inlineConverter,
+        IBlockConverter blockConverter,
+        IFlashcardBuilder flashcardBuilder)
+    {
+        this.inlineConverter = inlineConverter;
+        this.blockConverter = blockConverter;
+        this.flashcardBuilder = flashcardBuilder;
+    }
 
     public override string VisitTemplate([NotNull] TemplateParser.TemplateContext context)
     {

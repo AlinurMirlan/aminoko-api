@@ -1,6 +1,30 @@
-﻿namespace Aminoko.Api.Endpoints.Flashcard.UpdateFlashcard
+﻿using Aminoko.Api.Infrastructure.Exceptions;
+using Aminoko.Api.Persistence.Repos;
+using FastEndpoints;
+
+namespace Aminoko.Api.Endpoints.Flashcards.UpdateFlashcard;
+
+[HttpPut("/flashcard/{FlashcardId:int}")]
+public class UpdateFlashcardEndpoint : Endpoint<UpdateFlashcardRequest>
 {
-    public class UpdateFlashcardEndpoint
+    private readonly IFlashcardRepo _flashcardRepo;
+
+    public UpdateFlashcardEndpoint(IFlashcardRepo flashcardRepo)
     {
+        _flashcardRepo = flashcardRepo;
+    }
+
+    public override async Task HandleAsync(UpdateFlashcardRequest r, CancellationToken ct)
+    {
+        try
+        {
+            await _flashcardRepo.UpdateAsync(r.FlashcardId, r.ToFlashcard());
+        }
+        catch (BadRequestException e)
+        {
+            ThrowError(e.Message);
+        }
+
+        await SendNoContentAsync(cancellation: ct);
     }
 }

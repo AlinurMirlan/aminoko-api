@@ -6,5 +6,7 @@ public class CreateTemplateRequest
 {
     public required string UserId { get; set; }
 
-    public required TemplateDto Template { get; set; }
+    public required string Name { get; set; }
+
+    public required string Body { get; set; }
 }

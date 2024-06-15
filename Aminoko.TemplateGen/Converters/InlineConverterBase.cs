@@ -2,25 +2,40 @@
 
 public abstract class InlineConverterBase : IInlineConverter
 {
-    public string? StatementWord { get; private set; }
+    private string? _statementWord;
+    private string? _statementSentence;
 
-    public string? StatementSentence { get; private set; }
-
-    public void SetStatementWord(string statementWord)
+    public string StatementWord
     {
-        StatementWord = statementWord;
+        get => _statementWord ?? throw new InvalidOperationException($"{nameof(StatementWord)} is not set.");
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(value));
+            }
+
+            _statementWord = value;
+        }
     }
 
-    public void SetStatementSentence(string statementSentence)
+    public string StatementSentence
     {
-        StatementSentence = statementSentence;
+        get => _statementSentence ?? throw new InvalidOperationException($"{nameof(StatementSentence)} is not set.");
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(value));
+            }
+
+            _statementSentence = value;
+        }
     }
 
-    public virtual string InlineStatementWord() =>
-        StatementWord ?? throw new InvalidOperationException($"{nameof(StatementWord)} is not set.");
+    public virtual string InlineStatementWord() => StatementWord;
 
-    public virtual string InlineStatementSentence() =>
-        StatementSentence ?? throw new InvalidOperationException($"{nameof(StatementSentence)} is not set.");
+    public virtual string InlineStatementSentence() => StatementSentence;
 
     public virtual string InlineStatement(string inputString) => inputString;
 

@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Decks.DeleteDeck;
 
-[HttpDelete("/deck")]
+[HttpDelete("/deck/{DeckId:int}")]
 public sealed class DeleteDeckEndpoint : Endpoint<DeleteDeckRequest>
 {
     private readonly IDeckRepo _deckRepo;

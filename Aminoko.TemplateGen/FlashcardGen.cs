@@ -5,16 +5,16 @@ using Antlr4.Runtime;
 namespace Aminoko.TemplateGen;
 
 /// <summary>
-/// <inheritdoc cref="IFlashcardGenerator"/>
+/// <inheritdoc cref="IFlashcardGen"/>
 /// </summary>
 /// <param name="templateVisitor"></param>
-public class FlashcardGenerator : IFlashcardGenerator
+public class FlashcardGen : IFlashcardGen
 {
     private readonly InlineConverterBase _inlineConverter;
     private readonly BlockConverterBase _blockConverter;
     private readonly IFlashcardBuilder _flashcardBuilder;
 
-    public FlashcardGenerator(
+    public FlashcardGen(
         InlineConverterBase inlineConverter,
         BlockConverterBase blockConverter,
         IFlashcardBuilder flashcardBuilder)
@@ -26,15 +26,15 @@ public class FlashcardGenerator : IFlashcardGenerator
 
     public void SetStatementWord(string statementWord)
     {
-        _inlineConverter.SetStatementWord(statementWord);
-        _blockConverter.SetStatementWord(statementWord);
+        _inlineConverter.StatementWord = statementWord;
+        _blockConverter.StatementWord = statementWord;
     }
 
     public void SetStatementSentence(string statementSentence) 
-        => _inlineConverter.SetStatementSentence(statementSentence);
+        => _inlineConverter.StatementSentence = statementSentence;
 
     public void SetStatementImage(string statementImage) 
-        => _blockConverter.SetStatementImage(statementImage);
+        => _blockConverter.StatementImage = statementImage;
 
     public Flashcard GenerateFlashcard(string template)
     {

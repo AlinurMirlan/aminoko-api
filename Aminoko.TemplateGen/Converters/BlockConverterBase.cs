@@ -2,18 +2,35 @@
 
 public abstract class BlockConverterBase : IBlockConverter
 {
-    public string? StatementWord { get; private set; }
+    private string? _statementWord;
+    private string? _statementImage;
 
-    public string? StatementImage { get; private set; }
-
-    public void SetStatementWord(string statementSentence)
+    public string StatementWord
     {
-        StatementWord = statementSentence;
+        get => _statementWord ?? throw new InvalidOperationException($"{nameof(StatementWord)} is not set.");
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(value));
+            }
+
+            _statementWord = value;
+        }
     }
 
-    public void SetStatementImage(string statementImage)
+    public string StatementImage
     {
-        StatementImage = statementImage;
+        get => _statementImage ?? throw new InvalidOperationException($"{nameof(StatementImage)} is not set.");
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(value));
+            }
+
+            _statementImage = value;
+        }
     }
 
     public virtual string BlockText(string text) => text;
@@ -25,5 +42,4 @@ public abstract class BlockConverterBase : IBlockConverter
     public abstract string BlockStatementMethodAudio(string inputString);
 
     public abstract string BlockStatementMethodImage(string inputString);
-
 }

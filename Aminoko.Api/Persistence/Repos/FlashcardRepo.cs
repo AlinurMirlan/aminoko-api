@@ -1,6 +1,5 @@
 ﻿using Aminoko.Api.Infrastructure.Exceptions;
 using Aminoko.Api.Persistence.Models;
-using Aminoko.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aminoko.Api.Persistence.Repos;
@@ -14,15 +13,11 @@ public class FlashcardRepo : IFlashcardRepo
         _context = context;
     }
 
-    public async Task<Flashcard> GenerateAsync(Flashcard flashcard)
+    public async Task<Flashcard> AddAsync(Flashcard flashcard)
     {
-        if (await _context.Decks.FindAsync(flashcard.DeckId) is null)
-        {
-            throw new NotFoundException(nameof(Deck));
-        }
-
-        flashcard = (await _context.Flashcards.AddAsync(flashcard)).Entity;
+        await _context.Flashcards.AddAsync(flashcard);
         await _context.SaveChangesAsync();
+
         return flashcard;
     }
 
@@ -34,19 +29,41 @@ public class FlashcardRepo : IFlashcardRepo
         Flashcard? flashcard = await _context.Flashcards.FindAsync(flashcardId) 
             ?? throw new NotFoundException(nameof(Flashcard));
 
-        flashcard.Front = updatedFlashcard.Front;
-        flashcard.Back = updatedFlashcard.Back;
-        flashcard.DeckId = updatedFlashcard.DeckId;
+        if (!string.IsNullOrEmpty(updatedFlashcard.Front))
+        {
+            flashcard.Front = updatedFlashcard.Front;
+        }
 
-        await _context.SaveChangesAsync();
-    }
+        if (!string.IsNullOrEmpty(updatedFlashcard.Back))
+        {
+            flashcard.Back = updatedFlashcard.Back;
+        }
 
-    public async Task UpdateRepetitionDateAsync(int flashcardId, DateTime repetitionDate)
-    {
-        Flashcard? flashcard = await _context.Flashcards.FindAsync(flashcardId) 
-            ?? throw new NotFoundException(nameof(Flashcard));
+        if (updatedFlashcard.RepetitionDate != default)
+        {
+            flashcard.RepetitionDate = updatedFlashcard.RepetitionDate;
+        }
 
-        flashcard.RepetitionDate = repetitionDate;
+        if (updatedFlashcard.RetentionStats is null)
+        {
+            await _context.SaveChangesAsync();
+            return;
+        }
+
+        if (flashcard.RetentionStats.ReviewDate != default)
+        {
+            flashcard.RetentionStats.ReviewDate = updatedFlashcard.RetentionStats.ReviewDate;
+        }
+
+        if (updatedFlashcard.RetentionStats.Difficulty is not null)
+        {
+            flashcard.RetentionStats.Difficulty = updatedFlashcard.RetentionStats.Difficulty;
+        }
+
+        if (updatedFlashcard.RetentionStats.Stability is not null)
+        {
+            flashcard.RetentionStats.Stability = updatedFlashcard.RetentionStats.Stability;
+        }
 
         await _context.SaveChangesAsync();
     }

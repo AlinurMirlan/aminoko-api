@@ -1,5 +1,4 @@
 ﻿using Aminoko.Api.Infrastructure.Exceptions;
-using Aminoko.Api.Infrastructure.Mapping;
 using Aminoko.Api.Persistence.Models;
 using Aminoko.Api.Persistence.Repos;
 using FastEndpoints;

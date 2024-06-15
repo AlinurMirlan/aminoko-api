@@ -97,7 +97,10 @@ public class DeckRepo : IDeckRepo
     {
         var deck = await _context.Decks.FindAsync(deckId) ?? throw new NotFoundException(nameof(Deck));
 
-        deck.Name = updatedDeck.Name;
+        if (!string.IsNullOrEmpty(updatedDeck.Name))
+        {
+            deck.Name = updatedDeck.Name;
+        }
 
         await _context.SaveChangesAsync();
     }

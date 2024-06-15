@@ -20,10 +20,10 @@ public class Flashcard
     public required string Back { get; set; }
 
     [Column(TypeName = "date")]
-    public DateTime CreationDate { get; set; }
+    public DateTime CreationDate { get; set; } = DateTime.Now;
 
     [Column(TypeName = "date")]
-    public DateTime RepetitionDate { get; set; }
+    public DateTime? RepetitionDate { get; set; }
 
     [ForeignKey("RetentionStatsId")]
     public virtual RetentionStats RetentionStats { get; set; } = default!;

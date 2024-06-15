@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Decks.GetDeck;
 
-[HttpGet("/deck")]
+[HttpGet("/deck/{DeckId:int}")]
 public sealed class GetDeckEndpoint : Endpoint<GetDeckRequest, GetDeckResponse>
 {
     private readonly IDeckRepo _deckRepo;

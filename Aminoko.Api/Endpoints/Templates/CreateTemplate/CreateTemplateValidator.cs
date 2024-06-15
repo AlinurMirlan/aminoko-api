@@ -8,8 +8,7 @@ public class CreateTemplateValidator : Validator<CreateTemplateRequest>
     public CreateTemplateValidator()
     {
         RuleFor(x => x.UserId).NotEmpty();
-        RuleFor(x => x.Template).NotNull();
-        RuleFor(x => x.Template.Name).NotEmpty();
-        RuleFor(x => x.Template.Body).NotEmpty();
+        RuleFor(x => x.Name).NotNull();
+        RuleFor(x => x.Body).NotEmpty();
     }
 }

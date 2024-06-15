@@ -16,7 +16,7 @@ public class RetentionStats
     public double? Stability { get; set; }
 
     [Column(TypeName = "date")]
-    public DateTime ReviewDate { get; set; }
+    public DateTime? ReviewDate { get; set; }
 
     [InverseProperty("RetentionStats")]
     public virtual Flashcard Flashcard { get; set; } = default!;

@@ -11,19 +11,8 @@ public static class TemplateMappingExtensions
         {
             Id = template.Id,
             Name = template.Name,
-            UserId = template.UserId,
-            Body = template.Body
-        };
-    }
-
-    public static Template ToTemplate(this TemplateDto templateDto)
-    {
-        return new Template
-        {
-            Id = templateDto.Id,
-            Name = templateDto.Name,
-            UserId = templateDto.UserId,
-            Body = templateDto.Body
+            Body = template.Body,
+            CreationDate = template.CreationDate
         };
     }
 }
