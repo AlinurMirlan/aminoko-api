@@ -11,7 +11,7 @@ public class SearchDecksEndpoint : Endpoint<SearchDecksRequest, SearchDecksRespo
 
     public SearchDecksEndpoint(IDeckRepo deckRepo)
     {
-        _deckRepo = deckRepo;
+        _deckRepo = deckRepo ?? throw new ArgumentNullException(nameof(deckRepo));
     }
 
     public override async Task HandleAsync(SearchDecksRequest r, CancellationToken ct)

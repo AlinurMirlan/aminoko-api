@@ -4,14 +4,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Templates.GetTemplates;
 
-[HttpPost("/templates")]
+[HttpGet("/templates")]
 public class GetTemplatesEndpoint : Endpoint<GetTemplatesRequest, GetTemplatesResponse>
 {
     private readonly ITemplateRepo _templateRepo;
 
     public GetTemplatesEndpoint(ITemplateRepo templateRepo)
     {
-        _templateRepo = templateRepo;
+        _templateRepo = templateRepo ?? throw new ArgumentNullException(nameof(templateRepo));
     }
 
     public override async Task HandleAsync(GetTemplatesRequest r, CancellationToken ct)

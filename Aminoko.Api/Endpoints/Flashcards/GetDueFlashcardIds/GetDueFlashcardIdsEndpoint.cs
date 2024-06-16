@@ -3,14 +3,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Flashcards.GetFlashcardIds;
 
-[HttpGet("/{UserId}/flashcards/due")]
+[HttpGet("/flashcards/due/user/{UserId}")]
 public class GetDueFlashcardIdsEndpoint : Endpoint<GetDueFlashcardIdsRequest, GetDueFlashcardIdsResponse>
 {
     private readonly IFlashcardRepo _flashcardRepo;
 
     public GetDueFlashcardIdsEndpoint(IFlashcardRepo flashcardRepo)
     {
-        _flashcardRepo = flashcardRepo;
+        _flashcardRepo = flashcardRepo ?? throw new ArgumentNullException(nameof(flashcardRepo));
     }
 
     public override async Task HandleAsync(GetDueFlashcardIdsRequest r, CancellationToken ct)

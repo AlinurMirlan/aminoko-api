@@ -15,9 +15,9 @@ public class BlockConverter : BlockConverterBase
         IDefinitionGenerator definitionGenerator,
         IImageGenerator imageGenerator)
     {
-        _audioGenerator = audioGenerator;
-        _definitionGenerator = definitionGenerator;
-        _imageGenerator = imageGenerator;
+        _audioGenerator = audioGenerator ?? throw new ArgumentNullException(nameof(audioGenerator));
+        _definitionGenerator = definitionGenerator ?? throw new ArgumentNullException(nameof(definitionGenerator));
+        _imageGenerator = imageGenerator ?? throw new ArgumentNullException(nameof(imageGenerator));
     }
 
     public override string BlockStatementDefinition()

@@ -12,8 +12,8 @@ public class InlineConverter : InlineConverterBase
         ITextGenerator textGenerator,
         ITranslationGenerator translationGenerator)
     {
-        _textGenerator = textGenerator;
-        _translationGenerator = translationGenerator;
+        _textGenerator = textGenerator ?? throw new ArgumentNullException(nameof(textGenerator));
+        _translationGenerator = translationGenerator ?? throw new ArgumentNullException(nameof(translationGenerator));
     }
 
     public override string InlineStatementMethodQuery(string inputString) =>

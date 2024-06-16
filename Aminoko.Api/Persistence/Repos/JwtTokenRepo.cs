@@ -12,7 +12,7 @@ public class JwtTokenRepo : IJwtTokenRepo
 
     public JwtTokenRepo(IConfiguration config)
     {
-        _config = config;
+        _config = config ?? throw new ArgumentNullException(nameof(config));
     }
 
     public JwtCredentials CreateJwt(params Claim[] claims)

@@ -4,14 +4,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Decks.UpdateDeck;
 
-[HttpPut("/deck/{DeckId:int}")]
+[HttpPut("/decks/{DeckId:int}")]
 public sealed class UpdateDeckEndpoint : Endpoint<UpdateDeckRequest>
 {
     private readonly IDeckRepo _deckRepo;
 
     public UpdateDeckEndpoint(IDeckRepo deckRepo)
     {
-        _deckRepo = deckRepo;
+        _deckRepo = deckRepo ?? throw new ArgumentNullException(nameof(deckRepo));
     }
 
     public override async Task HandleAsync(UpdateDeckRequest r, CancellationToken ct)

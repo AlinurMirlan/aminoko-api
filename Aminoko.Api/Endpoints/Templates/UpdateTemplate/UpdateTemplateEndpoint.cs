@@ -4,14 +4,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Templates.UpdateTemplate;
 
-[HttpPut("/template/{TemplateId:int}")]
+[HttpPut("/templates/{TemplateId:int}")]
 public sealed class UpdateTemplateEndpoint : Endpoint<UpdateTemplateRequest>
 {
     private readonly ITemplateRepo _templateRepo;
 
     public UpdateTemplateEndpoint(ITemplateRepo templateRepo)
     {
-        _templateRepo = templateRepo;
+        _templateRepo = templateRepo ?? throw new ArgumentNullException(nameof(templateRepo));
     }
 
     public override async Task HandleAsync(UpdateTemplateRequest r, CancellationToken ct)

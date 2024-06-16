@@ -1,4 +1,5 @@
 ﻿using Aminoko.Api.Models;
+using Aminoko.Api.Persistence.Repos;
 using Aminoko.Api.Services;
 using FastEndpoints;
 
@@ -11,7 +12,7 @@ public class RepeatFlashcardEndpoint : Endpoint<RepeatFlashcardRequest>
 
     public RepeatFlashcardEndpoint(IFlashcardRepManager flashcardRepManager)
     {
-        _flashcardRepManager = flashcardRepManager;
+        _flashcardRepManager = flashcardRepManager ?? throw new ArgumentNullException(nameof(flashcardRepManager));
     }
 
     public override async Task HandleAsync(RepeatFlashcardRequest r, CancellationToken ct)

@@ -5,14 +5,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Templates.CreateTemplate;
 
-[HttpPost("/template")]
+[HttpPost("/templates")]
 public sealed class CreateTemplateEndpoint : Endpoint<CreateTemplateRequest, CreateTemplateResponse>
 {
     private readonly ITemplateRepo _templateRepo;
 
-    public CreateTemplateEndpoint(ITemplateRepo deckRepo)
+    public CreateTemplateEndpoint(ITemplateRepo templateRepo)
     {
-        _templateRepo = deckRepo;
+        _templateRepo = templateRepo ?? throw new ArgumentNullException(nameof(templateRepo));
     }
 
     public override async Task HandleAsync(CreateTemplateRequest r, CancellationToken ct)

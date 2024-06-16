@@ -14,9 +14,9 @@ public class FlashcardComposer : IFlashcardComposer
 
     public FlashcardComposer(FlashcardGen flashcardGen, ITemplateRepo templateRepo, IFlashcardRepo flashcardRepo)
     {
-        _flashcardGen = flashcardGen;
-        _templateRepo = templateRepo;
-        _flashcardRepo = flashcardRepo;
+        _flashcardGen = flashcardGen ?? throw new ArgumentNullException(nameof(flashcardGen));
+        _templateRepo = templateRepo ?? throw new ArgumentNullException(nameof(templateRepo));
+        _flashcardRepo = flashcardRepo ?? throw new ArgumentNullException(nameof(flashcardRepo));
     }
 
     public async Task<Flashcard> ComposeAsync(CreateFlashcardRequest flashcardGenRequest)

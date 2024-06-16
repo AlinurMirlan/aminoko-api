@@ -15,8 +15,8 @@ public sealed class SignUpEndpoint : Endpoint<SignUpRequest, SignUpResponse>
 
     public SignUpEndpoint(IJwtCredsRepo jwtCredsRepo, UserManager<User> userManager)
     {
-        _jwtCredsRepo = jwtCredsRepo;
-        _userManager = userManager;
+        _jwtCredsRepo = jwtCredsRepo ?? throw new ArgumentNullException(nameof(jwtCredsRepo));
+        _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
     }
 
     public override async Task HandleAsync(SignUpRequest r, CancellationToken c)

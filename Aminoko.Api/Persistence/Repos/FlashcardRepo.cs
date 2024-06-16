@@ -10,7 +10,7 @@ public class FlashcardRepo : IFlashcardRepo
 
     public FlashcardRepo(ApplicationContext context)
     {
-        _context = context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     public async Task<Flashcard> AddAsync(Flashcard flashcard)

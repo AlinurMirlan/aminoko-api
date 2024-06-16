@@ -5,14 +5,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Decks.CreateDeck;
 
-[HttpPost("/deck")]
+[HttpPost("/decks")]
 public sealed class CreateDeckEndpoint : Endpoint<CreateDeckRequest, CreateDeckResponse>
 {
     private readonly IDeckRepo _deckRepo;
 
     public CreateDeckEndpoint(IDeckRepo deckRepo)
     {
-        _deckRepo = deckRepo;
+        _deckRepo = deckRepo ?? throw new ArgumentNullException(nameof(deckRepo));
     }
 
     public override async Task HandleAsync(CreateDeckRequest r, CancellationToken ct)

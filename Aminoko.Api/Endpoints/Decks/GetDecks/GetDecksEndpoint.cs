@@ -4,14 +4,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Decks.GetDecks;
 
-[HttpPost("/decks")]
+[HttpGet("/decks")]
 public class GetDecksEndpoint : Endpoint<GetDecksRequest, GetDecksResponse>
 {
     private readonly IDeckRepo _deckRepo;
 
     public GetDecksEndpoint(IDeckRepo deckRepo)
     {
-        _deckRepo = deckRepo;
+        _deckRepo = deckRepo ?? throw new ArgumentNullException(nameof(deckRepo));
     }
 
     public override async Task HandleAsync(GetDecksRequest r, CancellationToken ct)

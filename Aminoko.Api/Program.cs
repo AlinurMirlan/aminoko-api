@@ -1,5 +1,8 @@
+using Amazon;
+using Amazon.S3;
 using Aminoko.Api.Infrastructure.Exceptions;
 using Aminoko.Api.Persistence;
+using Aminoko.Api.Persistence.Models;
 using Aminoko.Api.Persistence.Repos;
 using Aminoko.Api.Services;
 using Aminoko.Api.Services.ContentConversion;
@@ -9,7 +12,9 @@ using Aminoko.TemplateGen.Converters;
 using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OpenAI_API;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -26,12 +31,21 @@ builder.Services
 {
     options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
 })
-.AddSingleton<IDeckRepo, DeckRepo>()
-.AddSingleton<ITemplateRepo, TemplateRepo>()
+.AddIdentity<User, IdentityRole>((options) =>
+{
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<ApplicationContext>();
+
+builder.Services
+.AddScoped<IDeckRepo, DeckRepo>()
+.AddScoped<ITemplateRepo, TemplateRepo>()
 .AddSingleton<ITemplateValidator, TemplateValidator>()
-.AddSingleton<IWordRepo, WordRepo>()
-.AddSingleton<IJwtCredsRepo, JwtCredsRepo>()
-.AddSingleton<IFlashcardRepo, FlashcardRepo>()
+.AddScoped<IWordRepo, WordRepo>()
+.AddScoped<IJwtTokenRepo, JwtTokenRepo>()
+.AddScoped<IJwtCredsRepo, JwtCredsRepo>()
+.AddScoped<IFlashcardRepo, FlashcardRepo>()
+.AddSingleton<IOpenAIAPI, OpenAIAPI>()
 .AddSingleton<IAudioGenerator, AudioGenerator>()
 .AddSingleton<IDefinitionGenerator, DefinitionGenerator>()
 .AddSingleton<IImageGenerator, ImageGenerator>()
@@ -40,9 +54,10 @@ builder.Services
 .AddSingleton<InlineConverterBase, InlineConverter>()
 .AddSingleton<BlockConverterBase, BlockConverter>()
 .AddSingleton<IFlashcardBuilder, FlashcardBuilder>()
-.AddSingleton<IFlashcardGen, FlashcardGen>()
-.AddSingleton<IFlashcardComposer, FlashcardComposer>()
-.AddSingleton<IFlashcardRepManager, FlashcardRepManager>();
+.AddSingleton<FlashcardGen>()
+.AddScoped<IFlashcardComposer, FlashcardComposer>()
+.AddScoped<IFlashcardRepManager, FlashcardRepManager>()
+.AddSingleton<IAmazonS3, AmazonS3Client>(_ => new AmazonS3Client("#", "#", RegionEndpoint.USEast1));
 
 var app = builder.Build();
 

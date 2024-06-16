@@ -3,14 +3,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Templates.DeleteTemplate;
 
-[HttpDelete("/template/{TemplateId:int}")]
+[HttpDelete("/templates/{TemplateId:int}")]
 public sealed class DeleteTemplateEndpoint : Endpoint<DeleteTemplateRequest>
 {
     private readonly ITemplateRepo _templateRepo;
 
     public DeleteTemplateEndpoint(ITemplateRepo templateRepo)
     {
-        _templateRepo = templateRepo;
+        _templateRepo = templateRepo ?? throw new ArgumentNullException(nameof(templateRepo));
     }
 
     public override async Task HandleAsync(DeleteTemplateRequest r, CancellationToken ct)

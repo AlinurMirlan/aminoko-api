@@ -11,7 +11,7 @@ public class JwtCredsRepo : IJwtCredsRepo
 
     public JwtCredsRepo(IJwtTokenRepo jwtTokenRepo)
     {
-        _jwtTokenRepo = jwtTokenRepo;
+        _jwtTokenRepo = jwtTokenRepo ?? throw new ArgumentNullException(nameof(jwtTokenRepo));
     }
 
     public JwtCredentials CreateCreds(User user)

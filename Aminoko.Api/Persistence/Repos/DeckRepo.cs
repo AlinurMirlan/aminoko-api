@@ -11,7 +11,7 @@ public class DeckRepo : IDeckRepo
 
     public DeckRepo(ApplicationContext context)
     {
-        _context = context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     public async Task<Deck> GetAsync(int deckId) => 

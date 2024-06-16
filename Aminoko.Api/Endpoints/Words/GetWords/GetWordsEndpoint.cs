@@ -4,13 +4,14 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Words.GetWords;
 
+[HttpGet("/words")]
 public class GetWordsEndpoint : Endpoint<GetWordsRequest, GetWordsResponse>
 {
     private readonly IWordRepo _wordRepo;
 
     public GetWordsEndpoint(IWordRepo wordRepo)
     {
-        _wordRepo = wordRepo;
+        _wordRepo = wordRepo ?? throw new ArgumentNullException(nameof(wordRepo));
     }
 
     public override async Task HandleAsync(GetWordsRequest r, CancellationToken ct)

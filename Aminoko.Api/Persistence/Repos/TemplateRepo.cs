@@ -13,8 +13,8 @@ public class TemplateRepo : ITemplateRepo
 
     public TemplateRepo(ApplicationContext dbContext, ITemplateValidator templateValidator)
     {
-        _context = dbContext;
-        _templateValidator = templateValidator;
+        _context = dbContext?? throw new ArgumentNullException(nameof(dbContext));
+        _templateValidator = templateValidator ?? throw new ArgumentNullException(nameof(templateValidator));
     }
 
     public async Task<Template> GetAsync(int templateId) =>

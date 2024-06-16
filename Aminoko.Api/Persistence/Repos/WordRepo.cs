@@ -11,7 +11,7 @@ public class WordRepo : IWordRepo
 
     public WordRepo(ApplicationContext context)
     {
-        _context = context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     public async Task<Word> GetAsync(int wordId) =>
