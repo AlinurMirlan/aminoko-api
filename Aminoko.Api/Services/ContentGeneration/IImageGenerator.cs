@@ -2,5 +2,5 @@
 
 public interface IImageGenerator
 {
-    public string GenerateImage(string query);
+    public Task<string> GenerateImageAsync(string query);
 }

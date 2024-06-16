@@ -4,6 +4,7 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Flashcards.RepeatFlashcard;
 
+[HttpPost("/flashcards/repeat")]
 public class RepeatFlashcardEndpoint : Endpoint<RepeatFlashcardRequest>
 {
     private readonly IFlashcardRepManager _flashcardRepManager;

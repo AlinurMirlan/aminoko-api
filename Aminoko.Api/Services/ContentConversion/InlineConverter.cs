@@ -17,8 +17,8 @@ public class InlineConverter : InlineConverterBase
     }
 
     public override string InlineStatementMethodQuery(string inputString) =>
-        _textGenerator.GenerateText(inputString);
+        _textGenerator.GenerateTextAsync(inputString).Result;
 
     public override string InlineStatementMethodTranslate(string inputString) =>
-        _translationGenerator.GenerateTranslation(inputString);
+        _translationGenerator.GenerateTranslationAsync(inputString).Result;
 }

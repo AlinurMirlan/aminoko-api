@@ -2,5 +2,5 @@
 
 public interface IAudioGenerator
 {
-    public string GenerateAudio(string text);
+    public Task<string> GenerateAudioAsync(string text);
 }

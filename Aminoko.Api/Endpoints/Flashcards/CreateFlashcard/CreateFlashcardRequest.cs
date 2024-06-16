@@ -2,6 +2,8 @@
 
 public class CreateFlashcardRequest
 {
+    public required string UserId { get; set; }
+
     public required string Word { get; set; }
 
     public string? Sentence { get; set; }

@@ -2,5 +2,5 @@
 
 public interface ITextGenerator
 {
-    public string GenerateText(string query);
+    public Task<string> GenerateTextAsync(string query);
 }

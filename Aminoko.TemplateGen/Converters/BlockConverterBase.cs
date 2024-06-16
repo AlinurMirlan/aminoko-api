@@ -37,7 +37,7 @@ public abstract class BlockConverterBase : IBlockConverter
 
     public abstract string BlockStatementDefinition();
 
-    public abstract string BlockStatementImage();
+    public string BlockStatementImage() => throw new NotImplementedException();
 
     public abstract string BlockStatementMethodAudio(string inputString);
 

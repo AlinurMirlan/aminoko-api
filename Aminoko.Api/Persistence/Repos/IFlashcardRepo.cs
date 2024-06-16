@@ -12,5 +12,5 @@ public interface IFlashcardRepo
 
     public Task DeleteAsync(int flashcardId);
 
-    public Task<IEnumerable<int>> GetDueIdsAsync();
+    public Task<IEnumerable<int>> GetDueIdsAsync(string userId);
 }

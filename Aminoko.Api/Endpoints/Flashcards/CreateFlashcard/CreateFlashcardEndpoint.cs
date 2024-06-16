@@ -5,6 +5,7 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Flashcards.CreateFlashcard;
 
+[HttpPost("/flashcard")]
 public class CreateFlashcardEndpoint : Endpoint<CreateFlashcardRequest, CreateFlashcardResponse>
 {
     private readonly IFlashcardComposer _flashcardComposer;

@@ -2,5 +2,5 @@
 
 public interface ITranslationGenerator
 {
-    public string GenerateTranslation(string text);
+    public Task<string> GenerateTranslationAsync(string text);
 }

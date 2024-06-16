@@ -2,5 +2,6 @@
 
 public interface IDefinitionGenerator
 {
-    public string GenerateDefinition(string word);
+    public Task<string> GenerateDefinitionAsync(string word);
+
 }

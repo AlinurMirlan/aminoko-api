@@ -9,29 +9,23 @@ public class BlockConverter : BlockConverterBase
     private readonly IAudioGenerator _audioGenerator;
     private readonly IDefinitionGenerator _definitionGenerator;
     private readonly IImageGenerator _imageGenerator;
-    private readonly IImageRepo _imageRepo;
 
     public BlockConverter(
         IAudioGenerator audioGenerator,
         IDefinitionGenerator definitionGenerator,
-        IImageGenerator imageGenerator,
-        IImageRepo imageRepo)
+        IImageGenerator imageGenerator)
     {
         _audioGenerator = audioGenerator;
         _definitionGenerator = definitionGenerator;
         _imageGenerator = imageGenerator;
-        _imageRepo = imageRepo;
     }
 
     public override string BlockStatementDefinition()
-        => _definitionGenerator.GenerateDefinition(StatementWord);
-
-    public override string BlockStatementImage()
-        => _imageRepo.GetImageUrl(StatementImage);
+        => _definitionGenerator.GenerateDefinitionAsync(StatementWord).Result;
 
     public override string BlockStatementMethodAudio(string inputString)
-        => _audioGenerator.GenerateAudio(inputString);
+        => _audioGenerator.GenerateAudioAsync(inputString).Result;
 
     public override string BlockStatementMethodImage(string inputString)
-        => _imageGenerator.GenerateImage(inputString);
+        => _imageGenerator.GenerateImageAsync(inputString).Result;
 }

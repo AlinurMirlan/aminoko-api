@@ -15,9 +15,11 @@ public class Template
 
     public required string Body { get; set; }
 
+
     [Column(TypeName = "date")]
     public DateTime CreationDate { get; set; }
 
     [InverseProperty("Templates")]
     public virtual User User { get; set; } = default!;
+
 }

@@ -29,7 +29,8 @@ public class FlashcardComposer : IFlashcardComposer
         var flashcardBack = JsonConvert.SerializeObject(flashcardRaw.Back);
         var flashcard = new Flashcard()
         {
-            Word = new Word() { Name = flashcardGenRequest .Word },
+            UserId = flashcardGenRequest.UserId,
+            Word = new Word() { Name = flashcardGenRequest.Word, UserId = flashcardGenRequest.UserId },
             RetentionStats = new RetentionStats(),
             DeckId = flashcardGenRequest.DeckId,
             Front = flashcardFront,

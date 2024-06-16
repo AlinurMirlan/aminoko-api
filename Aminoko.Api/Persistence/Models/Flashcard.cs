@@ -19,6 +19,8 @@ public class Flashcard
 
     public required string Back { get; set; }
 
+    public string UserId { get; set; } = default!;
+
     [Column(TypeName = "date")]
     public DateTime CreationDate { get; set; } = DateTime.Now;
 
@@ -35,4 +37,8 @@ public class Flashcard
     [ForeignKey("WordId")]
     [InverseProperty("Flashcard")]
     public virtual Word Word { get; set; } = default!;
+
+    [ForeignKey("UserId")]
+    [InverseProperty("Flashcards")]
+    public virtual User User { get; set; } = default!;
 }

@@ -44,26 +44,24 @@ public class FlashcardRepo : IFlashcardRepo
             flashcard.RepetitionDate = updatedFlashcard.RepetitionDate;
         }
 
-        if (updatedFlashcard.RetentionStats is null)
+        if (updatedFlashcard.RetentionStats is not null)
         {
-            await _context.SaveChangesAsync();
-            return;
+            if (flashcard.RetentionStats.ReviewDate != default)
+            {
+                flashcard.RetentionStats.ReviewDate = updatedFlashcard.RetentionStats.ReviewDate;
+            }
+
+            if (updatedFlashcard.RetentionStats.Difficulty is not null)
+            {
+                flashcard.RetentionStats.Difficulty = updatedFlashcard.RetentionStats.Difficulty;
+            }
+
+            if (updatedFlashcard.RetentionStats.Stability is not null)
+            {
+                flashcard.RetentionStats.Stability = updatedFlashcard.RetentionStats.Stability;
+            }
         }
 
-        if (flashcard.RetentionStats.ReviewDate != default)
-        {
-            flashcard.RetentionStats.ReviewDate = updatedFlashcard.RetentionStats.ReviewDate;
-        }
-
-        if (updatedFlashcard.RetentionStats.Difficulty is not null)
-        {
-            flashcard.RetentionStats.Difficulty = updatedFlashcard.RetentionStats.Difficulty;
-        }
-
-        if (updatedFlashcard.RetentionStats.Stability is not null)
-        {
-            flashcard.RetentionStats.Stability = updatedFlashcard.RetentionStats.Stability;
-        }
 
         await _context.SaveChangesAsync();
     }
@@ -78,10 +76,10 @@ public class FlashcardRepo : IFlashcardRepo
         }
     }
 
-    public async Task<IEnumerable<int>> GetDueIdsAsync()
+    public async Task<IEnumerable<int>> GetDueIdsAsync(string userId)
     {
-        IEnumerable<int> dueIds = await _context.Flashcards
-            .Where(f => f.RepetitionDate <= DateTime.Today)
+        var dueIds = await _context.Flashcards
+            .Where(f => f.Deck.UserId == userId && f.RepetitionDate <= DateTime.UtcNow)
             .Select(f => f.Id)
             .ToListAsync();
 

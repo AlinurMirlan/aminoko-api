@@ -3,7 +3,8 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Flashcards.GetFlashcardIds;
 
-public class GetDueFlashcardIdsEndpoint : EndpointWithoutRequest<GetDueFlashcardIdsResponse>
+[HttpGet("/{UserId}/flashcards/due")]
+public class GetDueFlashcardIdsEndpoint : Endpoint<GetDueFlashcardIdsRequest, GetDueFlashcardIdsResponse>
 {
     private readonly IFlashcardRepo _flashcardRepo;
 
@@ -12,9 +13,9 @@ public class GetDueFlashcardIdsEndpoint : EndpointWithoutRequest<GetDueFlashcard
         _flashcardRepo = flashcardRepo;
     }
 
-    public override async Task HandleAsync(CancellationToken ct)
+    public override async Task HandleAsync(GetDueFlashcardIdsRequest r, CancellationToken ct)
     {
-        IEnumerable<int> flashcardIds = await _flashcardRepo.GetDueIdsAsync();
+        IEnumerable<int> flashcardIds = await _flashcardRepo.GetDueIdsAsync(r.UserId);
         await SendOkAsync(new GetDueFlashcardIdsResponse { FlashcardIds = flashcardIds }, cancellation: ct);
     }
 }

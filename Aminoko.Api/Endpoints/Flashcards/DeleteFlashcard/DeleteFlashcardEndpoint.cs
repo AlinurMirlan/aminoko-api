@@ -3,6 +3,7 @@ using FastEndpoints;
 
 namespace Aminoko.Api.Endpoints.Flashcards.DeleteFlashcard;
 
+[HttpDelete("/flashcard/{FlashcardId:int}")]
 public class DeleteFlashcardEndpoint : Endpoint<DeleteFlashcardRequest>
 {
     private readonly IFlashcardRepo _flashcardRepo;

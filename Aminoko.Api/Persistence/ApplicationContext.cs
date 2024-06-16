@@ -12,6 +12,8 @@ public class ApplicationContext : IdentityDbContext<User>
 
     public DbSet<Template> Templates { get; set; }
 
+    public DbSet<Word> Words { get; set; }
+
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
     }
