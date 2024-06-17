@@ -80,7 +80,7 @@ public class DeckRepo : IDeckRepo
 
         var pageSize = pageRequest.PageSize;
         var page = pageRequest.Page;
-        var matchingDecks = _context.Decks.Where(d => d.UserId == userId && d.Name.Contains(searchTerm));
+        var matchingDecks = _context.Decks.Where(d => d.UserId == userId && EF.Functions.ILike(d.Name, $"%{searchTerm}%"));
         var pageCount = (int)Math.Ceiling((double)await matchingDecks.CountAsync() / pageSize);
         matchingDecks = matchingDecks.Skip(pageSize * (page - 1)).Take(pageSize);
 

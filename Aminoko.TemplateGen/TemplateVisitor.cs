@@ -26,8 +26,8 @@ public class TemplateVisitor : TemplateParserBaseVisitor<string>
 
     public override string VisitTemplate([NotNull] TemplateParser.TemplateContext context)
     {
-        context.statements().Accept(this);
-        context.front().Accept(this);
+        context.statements()?.Accept(this);
+        context.front().Accept(this); 
         flashcardBuilder.SwitchSide();
         context.back().Accept(this);
         return string.Empty;

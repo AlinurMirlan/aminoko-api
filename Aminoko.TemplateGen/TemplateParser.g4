@@ -5,7 +5,7 @@ options {
 }
 
 template
-  : statements front back
+  : statements? front back
   ;
 
 statements

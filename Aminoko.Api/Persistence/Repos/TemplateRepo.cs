@@ -9,12 +9,10 @@ namespace Aminoko.Api.Persistence.Repos;
 public class TemplateRepo : ITemplateRepo
 {
     private readonly ApplicationContext _context;
-    private readonly ITemplateValidator _templateValidator;
 
-    public TemplateRepo(ApplicationContext dbContext, ITemplateValidator templateValidator)
+    public TemplateRepo(ApplicationContext dbContext)
     {
         _context = dbContext?? throw new ArgumentNullException(nameof(dbContext));
-        _templateValidator = templateValidator ?? throw new ArgumentNullException(nameof(templateValidator));
     }
 
     public async Task<Template> GetAsync(int templateId) =>
@@ -46,7 +44,7 @@ public class TemplateRepo : ITemplateRepo
 
         var pageSize = pageRequest.PageSize;
         var page = pageRequest.Page;
-        var matchingTemplates = _context.Templates.Where(d => d.UserId == userId && d.Name.Contains(searchTerm));
+        var matchingTemplates = _context.Templates.Where(d => d.UserId == userId && EF.Functions.ILike(d.Name, $"%{searchTerm}%"));
         var pageCount = (int)Math.Ceiling((double)await matchingTemplates.CountAsync() / pageSize);
         matchingTemplates = matchingTemplates.Skip(pageSize * (page - 1)).Take(pageSize);
 
@@ -76,11 +74,6 @@ public class TemplateRepo : ITemplateRepo
         if (_context.Users.Find(template.UserId) is null)
         {
             throw new NotFoundException(nameof(User));
-        }
-
-        if (!_templateValidator.Validate(template.Body))
-        {
-            throw new BadRequestException("Invalid template body.");
         }
 
         if (_context.Templates.Any(t => t.Name == template.Name && t.UserId == template.UserId))

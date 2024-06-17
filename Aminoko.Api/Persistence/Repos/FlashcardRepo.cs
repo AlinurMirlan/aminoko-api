@@ -79,7 +79,7 @@ public class FlashcardRepo : IFlashcardRepo
     public async Task<IEnumerable<int>> GetDueIdsAsync(string userId)
     {
         var dueIds = await _context.Flashcards
-            .Where(f => f.Deck.UserId == userId && f.RepetitionDate <= DateTime.UtcNow)
+            .Where(f => f.Deck.UserId == userId && (f.RepetitionDate == null || f.RepetitionDate <= DateTime.UtcNow))
             .Select(f => f.Id)
             .ToListAsync();
 

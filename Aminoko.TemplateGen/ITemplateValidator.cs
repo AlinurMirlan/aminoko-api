@@ -2,5 +2,5 @@
 
 public interface ITemplateValidator
 {
-    public bool Validate(string template);
+    public bool IsValid(string template, out string validationErrors);
 }

@@ -46,6 +46,6 @@ public class AudioGenerator : IAudioGenerator
         };
 
         await _amazonS3Client.PutObjectAsync(putObjectRequest);
-        return audioKey;
+        return @$"https://{_bucketName}.s3.amazonaws.com/{audioKey}";
     }
 }

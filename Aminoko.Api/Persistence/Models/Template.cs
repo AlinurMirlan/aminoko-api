@@ -17,7 +17,7 @@ public class Template
 
 
     [Column(TypeName = "date")]
-    public DateTime CreationDate { get; set; }
+    public DateTime CreationDate { get; set; } = DateTime.Now;
 
     [InverseProperty("Templates")]
     public virtual User User { get; set; } = default!;

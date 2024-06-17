@@ -17,7 +17,7 @@ public class Deck
     public required string Name { get; set; }
 
     [Column(TypeName = "date")]
-    public DateTime CreationDate { get; set; }
+    public DateTime CreationDate { get; set; } = DateTime.Now;
 
     [InverseProperty("Deck")]
     public virtual ICollection<Flashcard> Flashcards { get; } = [];

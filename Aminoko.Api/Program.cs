@@ -12,6 +12,7 @@ using Aminoko.TemplateGen.Converters;
 using FastEndpoints;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenAI_API;
@@ -23,12 +24,10 @@ var config = builder.Configuration;
 builder.Services
 .AddFastEndpoints()
 .SwaggerDocument()
-.AddAuthenticationJwtBearer(options =>
-    options.SigningKey = config["Security:Tokens:Key"]
-        ?? throw new ConfigurationException("JWT security key is not set up."))
 .AddAuthorization()
 .AddDbContext<ApplicationContext>(options =>
 {
+    options.UseLazyLoadingProxies();
     options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
 })
 .AddIdentity<User, IdentityRole>((options) =>
@@ -36,6 +35,13 @@ builder.Services
     options.User.RequireUniqueEmail = true;
 })
 .AddEntityFrameworkStores<ApplicationContext>();
+
+builder.Services
+.AddAuthenticationJwtBearer(options =>
+    options.SigningKey = config["Security:Tokens:Key"]
+        ?? throw new ConfigurationException("JWT security key is not set up."))
+.AddAuthentication(o =>
+    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme);
 
 builder.Services
 .AddScoped<IDeckRepo, DeckRepo>()

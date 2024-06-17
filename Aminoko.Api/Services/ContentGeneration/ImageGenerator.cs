@@ -31,7 +31,7 @@ public class ImageGenerator : IImageGenerator
             new ImageGenerationRequest(query, Model.DALLE2, ImageSize._512, 
                 responseFormat: ImageResponseFormat.B64_json));
 
-        var imageKey = $"{Guid.NewGuid()}.jpeg";
+        var imageKey = $"{Guid.NewGuid()}.jpg";
         var putObjectRequest = new PutObjectRequest
         {
             BucketName = _bucketName,
@@ -41,6 +41,6 @@ public class ImageGenerator : IImageGenerator
         };
 
         await _amazonS3Client.PutObjectAsync(putObjectRequest);
-        return imageKey;
+        return @$"https://{_bucketName}.s3.amazonaws.com/{imageKey}";
     }
 }

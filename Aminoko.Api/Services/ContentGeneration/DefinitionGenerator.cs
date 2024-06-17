@@ -22,7 +22,7 @@ public class DefinitionGenerator : IDefinitionGenerator
 
     public async Task<string> GenerateDefinitionAsync(string word)
     {
-        var response = await _httpClient.GetAsync($"pseudo/definitions?limit=200&includeRelated=false&useCanonical=false&includeTags=false&api_key={_apiKey}");
+        var response = await _httpClient.GetAsync($"{word.ToLowerInvariant()}/definitions?limit=200&includeRelated=false&useCanonical=false&includeTags=false&api_key={_apiKey}");
         if (!response.IsSuccessStatusCode)
         {
            return string.Empty;
@@ -30,8 +30,7 @@ public class DefinitionGenerator : IDefinitionGenerator
 
         var stringBuilder = new StringBuilder();
         var content = await response.Content.ReadAsStringAsync();
-        var wordDefs = JsonSerializer.Deserialize<List<WordDefinition>>(content)
-            ?? throw new SerializationException();
+        var wordDefs = JsonSerializer.Deserialize<List<WordDefinition>>(content) ?? [];
 
         wordDefs.ForEach(w => w.Definition = Regex.Replace(w.Definition, "<.*?>", string.Empty));
         foreach (var wordDef in wordDefs)

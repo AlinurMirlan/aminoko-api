@@ -80,7 +80,7 @@ public class WordRepo : IWordRepo
 
         var pageSize = pageRequest.PageSize;
         var page = pageRequest.Page;
-        var matchingWords = _context.Words.Where(d => d.UserId == userId && d.Name.Contains(searchTerm));
+        var matchingWords = _context.Words.Where(d => d.UserId == userId && EF.Functions.ILike(d.Name, $"%{searchTerm}%"));
         var pageCount = (int)Math.Ceiling((double)await matchingWords.CountAsync() / pageSize);
         matchingWords = matchingWords.Skip(pageSize * (page - 1)).Take(pageSize);
 
